@@ -1,11 +1,16 @@
-// const createError = require('http-errors');
+const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const layouts = require("express-ejs-layouts");
 const pw_auth_router = require('./routes/pwauth')
-const keldenRouter = require('./routes/kelden');
+const toDoRouter = require('./routes/todo');
+const weatherRouter = require('./routes/weather');
+const aboutRouter = require('./routes/about');
+const formRouter = require('./routes/form');
+const indexRouter = require('./routes/index');
+const teamRouter = require('./routes/team');
 
 const User = require('./models/User');
 
@@ -13,7 +18,7 @@ const User = require('./models/User');
 /*  Connecting to a Mongo Database Server   */
 /* **************************************** */
 const mongodb_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/pwdemo';
-console.log('MONGODB_URI=',mongodb_URI);
+console.log('MONGODB_URI=',process.env.MONGODB_URI);
 
 const mongoose = require( 'mongoose' );
 
@@ -99,24 +104,20 @@ app.get('/', (req,res,next) => {
 })
 
 app.get('/about', 
-isLoggedIn,
+  isLoggedIn,
   (req,res,next) => {
     res.render('about');
   }
-  )
+)
 
-app.get('/team', 
-isLoggedIn,
-  (req,res,next) => {
-    res.render('team');
-  }
-  )
+app.use(toDoRouter);
+app.use(weatherRouter);
+app.use(aboutRouter);
+app.use(formRouter);
+app.use(indexRouter);
+app.use(teamRouter);
 
-
-app.use(keldenRouter);
-
-
-  // catch 404 and forward to error handler
+// catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
 });
