@@ -1,0 +1,17 @@
+<head>
+    <title>GPT Poem Generator</title>
+</head>
+
+<body>
+    <h1>GPT Poem Generator</h1>
+    <form action="/index/poems" method="POST">
+        <label for="prompt">Enter a prompt:</label><br>
+        <input type="text" id="prompt" name="prompt"><br>
+        <br>
+        <input type="submit" value="Generate Poem">
+    </form>
+    <% if (typeof poem !== 'undefined') { %>
+        <h2>Poem:</h2>
+        <p><%= poem %></p>
+      <% } %>
+</body>

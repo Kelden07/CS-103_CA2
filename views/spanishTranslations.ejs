@@ -1,0 +1,17 @@
+<head>
+    <title>GPT Spanish Translator</title>
+</head>
+
+<body>
+    <h1>GPT Spanish Translator</h1>
+    <form action="/index/spanishTranslations" method="POST">
+        <label for="prompt">Enter text to translate:</label><br>
+        <input type="text" id="prompt" name="prompt"><br>
+        <br>
+        <input type="submit" value="Translate">
+    </form>
+    <% if (typeof translation !== 'undefined') { %>
+        <h2>Spanish Translation:</h2>
+        <p><%= translation %></p>
+    <% } %>
+</body>

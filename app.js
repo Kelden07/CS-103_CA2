@@ -6,11 +6,8 @@ const logger = require('morgan');
 const layouts = require("express-ejs-layouts");
 const pw_auth_router = require('./routes/pwauth')
 const toDoRouter = require('./routes/todo');
-const weatherRouter = require('./routes/weather');
-const aboutRouter = require('./routes/about');
-const formRouter = require('./routes/form');
-const indexRouter = require('./routes/index');
-const teamRouter = require('./routes/team');
+const transactionRouter = require('./routes/transaction');
+const gptRouter = require('./routes/gpt');
 
 const User = require('./models/User');
 
@@ -92,16 +89,20 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
-
-
 app.use(pw_auth_router)
 
 app.use(layouts);
 
 app.get('/', (req,res,next) => {
-  res.render('index');
+  res.render('home');
 })
+
+// app.get('/team', 
+//   isLoggedIn,
+//   (req,res,next) => {
+//     res.render('team');
+//   }
+// )
 
 app.get('/about', 
   isLoggedIn,
@@ -110,12 +111,39 @@ app.get('/about',
   }
 )
 
+app.get('/index', 
+  isLoggedIn,
+  (req,res,next) => {
+    res.render('index');
+  }
+)
+
+const axios = require('axios')
+app.get('/openai_demo',
+async (req,res,next) => {
+response =
+await axios.post('http://gracehopper.cs-i.brandeis.edu:3500/openai',
+{prompt:"Make a story about the superhero"})
+res.json(response.data)
+})
+
+app.get('/team', 
+  isLoggedIn,
+  (req,res,next) => {
+    res.render('team');
+  }
+)
+
+app.get('/home', 
+  isLoggedIn,
+  (req,res,next) => {
+    res.render('home');
+  }
+)
+
 app.use(toDoRouter);
-app.use(weatherRouter);
-app.use(aboutRouter);
-app.use(formRouter);
-app.use(indexRouter);
-app.use(teamRouter);
+app.use(transactionRouter);
+app.use(gptRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

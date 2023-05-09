@@ -1,0 +1,17 @@
+<head>
+    <title>GPT Summarization</title>
+</head>
+
+<body>
+    <h1>GPT Summarization</h1>
+    <form action="/index/summaries" method="POST">
+        <label for="prompt">Enter text to summarize:</label><br>
+        <input type="text" id="prompt" name="prompt"><br>
+        <br>
+        <input type="submit" value="Summarize">
+    </form>
+    <% if (typeof summary  !== 'undefined') { %>
+        <h2>Summary:</h2>
+        <p><%= summary %></p>
+    <% } %>
+</body>
