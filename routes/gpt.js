@@ -67,16 +67,4 @@ router.post("/index/poems", async (req, res) => {
 
 });
 
-// Route for the synonyms page
-router.get("/index/superhero", (req, res) => {
-  res.render("superhero");
-});
-
-// Route to handle synonym form submissions
-router.post("/index/superhero", async (req, res) => {
-  const prompt = "Create a story about this superhero named: " + req.body.prompt;
-  const synonyms = await getResponse(prompt);
-  res.render("superhero", { superhero });
-});
-
 module.exports = router;
